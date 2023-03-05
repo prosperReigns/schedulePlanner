@@ -17,41 +17,12 @@
 			box-sizing: border-box;
 			font-family: cursive;
 		}
-		/*.container{
-			max-width: 700px;
-			border: 1px solid red;
-
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin: 100px auto;
-		}
-		.container button{
-			width: 150px;
-			padding: 10px;
-			margin: 10px;
-			background: var(--blueCol);
-			border-radius: 7px;
-			color: var(--white);
-			font-size: var(--pText);
-			border: none;
-			outline: none;
-			cursor: pointer;
-		}
-		.console{
-			width: 300px;
-			min-height: 42px;
-			color: var(--white);
-			font-size: 2em;
-			background: var(--darkgray);
-			border-radius: 7px;
-			text-align: center;
-		}*/
 
 		body{
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			flex-direction: column;
 			height: 100vh;
 			background: linear-gradient(hsla(150, 30%, 50%, .65), hsla(200, 25%, 50%, .65));
 		}
@@ -145,14 +116,9 @@
 			text-shadow: 1px 1px 2px rgba(0, 0, 0, .85);
 		}
 	</style>
+	<h1>To-do list</h1>
 </head>
 <body>
-	<!-- <div class="container">
-		<button>-</button>
-		<div class="console"></div>
-		<button>+</button>
-	</div> -->
-
 	<div class="item">
 		<div class="item-1">
 			<input type="text" placeholder="write..." id="sample">
@@ -164,75 +130,50 @@
 		<div class="output"></div>
 	</div>
 	
-
 	<!-- scripting code -->
 	<script>
-
-		// //quantity regulator
-		// const display = document.querySelector(".console");
-		// const add = document.querySelectorAll("button")[1];
-
-		// var quantity = 1;
-		// add.addEventListener("click", () => {
-		// 	if(quantity < 10){
-		// 		quantity++;
-		// 		quantity = (quantity < 10) ? + quantity : quantity;
-		// 		display.innerHTML = quantity;
-		// 	}
-				
-		// })
-
-		// const subtract = document.querySelectorAll("button")[0];
-		// subtract.addEventListener("click", () => {
-		// 	if(quantity > 1){
-		// 		quantity--;
-		// 		quantity = (quantity < 10) ? + quantity : quantity;
-		// 		display.innerHTML = quantity;
-		// 	}
-			
-		// })
-
 		//todo list app
-
-		function docFragment(){
-		const div = document.createElement('div');
-		const paragraph = document.createElement('p');
-		const button = document.createElement('button');
-		const input = document.querySelector('input');
-		const inputValue = input.value.trim();
-		const output = document.querySelector(".output");
+		function createTemplate(){
+			const div = document.createElement('div');
+			const paragraph = document.createElement('p');
+			const button = document.createElement('button');
 		
-		// Both paragrahh and button are added as a child of the div container
-		div.classList.add('list-items');
-		paragraph.textContent = inputValue;	//the value from the input element is set as the text content for our document fragment
-		button.textContent = 'x';
+			div.classList.add('list-items');
+			 const input = document.querySelector('input').value;
+			paragraph.textContent = input;	
 
-		div.addEventListener("click", (e) => {
-			const target = e.target;
-			if(target.matches('button')){
-				const removeItem = button.parentNode;
-				output.removeChild(removeItem)
-			}
-		})
+			button.textContent = 'x';
+			
+			div.appendChild(paragraph);	
+			div.appendChild(button);
 
-		div.appendChild(paragraph);	//append paragraph to div
-		div.appendChild(button);	//append button to div
-		output.appendChild(div)		//append div to output
+			div.addEventListener("click", (e) => {
+				const target = e.target;
+				if(target.matches("button")){
+					const removeItem = button.parentNode;
+		 			output.removeChild(removeItem)
+				}
+			})
+
+			const output = document.querySelector(".output");
+			output.appendChild(div);
 		}
 
-		const addItem = document.querySelector('button');
-		addItem.addEventListener("click", () => {
-			const input = document.querySelector('input');
-			const inputValue = input.value;
-			const errorMsg = document.querySelector('span');
-			if(inputValue === ""){
+		 function checkTask(){
+		 	const errorMsg = document.querySelector('span');
+		 	const input = document.querySelector('input').value;
+		 	if(input.trim() === ""){
 				errorMsg.textContent = 'please enter a task';
 			}else{
-				errorMsg.textContent = ""
-				docFragment()
-			}
-		});
-		
+		 		errorMsg.textContent = ""
+		 		createTemplate();
+		 	}
+		 }
+
+		const addItem = document.querySelector('button');
+		addItem.addEventListener("click", checkTask);
+
+
 	</script>
 </body>
 </html>
